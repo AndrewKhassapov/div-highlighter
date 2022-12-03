@@ -1,6 +1,6 @@
 # Website div highlighter
 
-#### Highlight every div on your website in a unique color. :closed_book::orange_book::ledger::green_book::blue_book::yellow_book:
+#### Highlight every div on your website in a unique color. :closed_book::orange_book::ledger::green_book::blue_book:
 
 #### This was created in an effort to simplify web development, by highlighting every div. :computer:
 
@@ -46,6 +46,6 @@ A clearer example of how to implement this in **Google Chrome**:
    On Windows: Ctrl + Enter.
    On macOS: Command + Enter.
 
-#### Every div on the website will change to a transparent color with a clear border.
+#### Every div on the website will change to a transparent color with a clear border. :rainbow:
 
 ### In development as of 4th December, 2022.
