@@ -1,18 +1,22 @@
-# real-estate-market-price
+# Website div highlighter
 
-#### You are looking at a property on www.realestate.com.au 🏠
-#### But there is no listed price, 💲
-#### Run this snippet to get an indicative market and advertised price.
+#### Highlight every div on your website in a unique color. :closed_book::orange_book::ledger::green_book::blue_book::purple_book:
 
-
-#### This shows the unlisted market price for a property on www.realestate.com.au. 🏠
+#### This was created in an effort to simplify web development, by highlighting every div. :computer:
 
 #### ❓ How to implement it?
 
-1. Find a property on www.realestate.com.au that you are interested in.
-   eg. [this nice property](https://www.realestate.com.au/property-house-vic-beaconsfield+upper-136928382)
-   
+1. Open your website.
+   eg. [this example](https://example.com/)
 2. Copy, paste and run the code in your browser javascript scratchpad.
+
+#### :arrow_up_small: Features in development.
+
+[x] Prototype code to add color to every div. :heavy_check_mark:
+[ ] Function to revert div colors.
+[ ] Google Chrome browser plugin.
+[ ] Public listing of Google Chrome browser plugin.
+[ ] Custom features to Google Chrome browser plugin.
 
 #### ❓ What is a javascript scratchpad?
 
@@ -20,8 +24,8 @@ Good question,
 
 A clearer example of how to implement this in **Google Chrome**:
 
-1. Find a property on www.realestate.com.au that you are interested in.
-   eg. [this nice property](https://www.realestate.com.au/property-house-vic-beaconsfield+upper-136928382)
+1. Open your website.
+   eg. [this example](https://example.com/)
 
 2. View page source: Right click anywhere > Inspect
 
@@ -33,7 +37,7 @@ A clearer example of how to implement this in **Google Chrome**:
 4. Paste the .js code into the snippet.
 
 5. Save the snippet:
-   eg. 
+   eg.
    On Windows: CTRL + S.
    On macOS: Command + S.
 
@@ -42,7 +46,6 @@ A clearer example of how to implement this in **Google Chrome**:
    On Windows: Ctrl + Enter.
    On macOS: Command + Enter.
 
-#### The advertised price and listing price will display on the website and console.
-##### Until the website is changed.
+#### Every div on the website will change to a transparent color with a clear border.
 
-### Valid as of 15th August, 2021.
+### In development as of 4th December, 2022.
