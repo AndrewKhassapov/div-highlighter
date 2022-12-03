@@ -1,8 +1,8 @@
 # Website div highlighter
 
-#### Highlight every div on your website in a unique color. :closed_book::orange_book::ledger::green_book::blue_book:
+### Highlight every div on your website in a unique color. :closed_book::orange_book::ledger::green_book::blue_book:
 
-#### This was created in an effort to simplify web development, by highlighting every div. :computer:
+### This was created in an effort to simplify web development, by highlighting every div. :computer:
 
 #### ❓ How to implement it?
 
