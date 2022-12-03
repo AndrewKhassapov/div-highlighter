@@ -5,7 +5,13 @@ var main = function () {
         return "#" + randomColor + alpha;
     }
 
-    divs = document.getElementsByTagName('div');
+    const divs = document.getElementsByTagName('div');
+    const divsInitial = [];
+    if (divsInitial.length <= 0) {
+        for (let i = 0; i < divs.length; i++) {
+            divsInitial[i] = divs[i];
+        }
+    }
 
     const changeDivColor = function () {
         for (let i = 0; i < divs.length; i++) {
@@ -15,5 +21,14 @@ var main = function () {
         }
     }
     changeDivColor();
+
+    const restoreDivColor = function () {
+        for (let i = 0; i < divs.length; i++) {
+            divs[i].style.backgroundColor = divsInitial[i].style.backgroundColor ? divsInitial[i].style.backgroundColor : '';
+            divs[i].style.border = divsInitial[i].style.border ? divsInitial[i].style.border : '';
+        }
+    }
+    //restoreDivColor();
+
 }
 main();
