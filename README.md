@@ -13,10 +13,10 @@
 #### :arrow_up_small: Features in development.
 
 - [x] Prototype code to add color to every div. :heavy_check_mark:
-- [x] Function to revert div colors.
-- [ ] Google Chrome browser plugin.
-- [ ] Public listing of Google Chrome browser plugin.
-- [ ] Custom features to Google Chrome browser plugin.
+- [x] Function to revert div colors. :heavy_check_mark:
+- [ ] Google Chrome browser [extension as .zip](https://bashvlas.com/blog/install-chrome-extension-in-developer-mode/).
+- [ ] Public listing of Google Chrome browser extension.
+- [ ] Custom features to Google Chrome browser extension.
 
 #### ❓ What is a javascript scratchpad?
 
@@ -48,4 +48,4 @@ A clearer example of how to implement this in **Google Chrome**:
 
 #### Every div on the website will change to a transparent color with a clear border. :rainbow:
 
-#### In development as of 4th December, 2022.
+#### In development as of 5th December, 2022.
