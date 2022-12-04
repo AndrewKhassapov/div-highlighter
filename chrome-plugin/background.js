@@ -1,11 +1,7 @@
-// Global properties
-var active = false;
-var divs = [];
-var divsInitial = [];
-
 // The body of this function will be executed as a content script inside the current page
 function runPlugin() {
 
+  var active = false; // TODO: Store and get from local storage.
   console.log("Plugin running", active); // FOR DEBUGGING
 
   var main = function () {
@@ -15,8 +11,8 @@ function runPlugin() {
       return "#" + randomColor + alpha;
     }
 
-    divs = document.getElementsByTagName('div');
-    //const divsInitial = [];
+    const divs = document.getElementsByTagName('div');
+    const divsInitial = [];
     if (divsInitial.length <= 0) {
       for (let i = 0; i < divs.length; i++) {
         divsInitial[i] = divs[i];
