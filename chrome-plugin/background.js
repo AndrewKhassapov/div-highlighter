@@ -1,7 +1,12 @@
+// Global properties
+var active = false;
+var divs = [];
+var divsInitial = [];
+
 // The body of this function will be executed as a content script inside the current page
 function runPlugin() {
 
-  console.log("Plugin running"); // FOR DEBUGGING
+  console.log("Plugin running", active); // FOR DEBUGGING
 
   var main = function () {
 
@@ -10,8 +15,8 @@ function runPlugin() {
       return "#" + randomColor + alpha;
     }
 
-    const divs = document.getElementsByTagName('div');
-    const divsInitial = [];
+    divs = document.getElementsByTagName('div');
+    //const divsInitial = [];
     if (divsInitial.length <= 0) {
       for (let i = 0; i < divs.length; i++) {
         divsInitial[i] = divs[i];
@@ -25,7 +30,9 @@ function runPlugin() {
         divs[i].style.border = 'solid ' + randomColor + 'ff';
       }
     }
-    changeDivColor();
+    if (!active) {
+      changeDivColor();
+    }
 
     const restoreDivColor = function () {
       for (let i = 0; i < divs.length; i++) {
@@ -33,11 +40,14 @@ function runPlugin() {
         divs[i].style.border = divsInitial[i].style.border ? divsInitial[i].style.border : '';
       }
     }
-    //restoreDivColor();
+    if (active) {
+      console.log("Restoring divs");
+      restoreDivColor();
+    }
 
+    active = !active;
   }
   main();
-
 
   return;
 }
