@@ -4,10 +4,11 @@ function runPlugin() {
   /**
    * True when plugin is active. False otherwise.
    */
-  let active = false;
+  let active = null;
 
   console.log("Plugin running"); // FOR DEBUGGING
 
+  // TODO: Move initialization to a separate function
   let readChromeLocalStorage = function () {
     chrome.storage.local.get(null, (items) => {
       var allKeys = Object.keys(items);
@@ -16,39 +17,43 @@ function runPlugin() {
   }
 
   let checkStorage = function () {
-
     const key = 'active';
     const value = active;
+    // Retrieve data from local storage aynchronously
+    chrome.storage.local.get(key, (outcome) => {
+      if (outcome.active === 'undefined') {
+        active = false; // Initialize
+        chrome.storage.local.set({ 'active': active });
+      };
+      active = outcome.active;
+      console.log('Retrieved name: ', key, ':', outcome.active, ' set as: ', active);
+    });
+  }
+  checkStorage();
 
-    // Set local storage asynchronously
+
+  // Set local storage asynchronously
+  const activeToggle = function () {
+    active = !active;
     chrome.storage.local.set({ 'active': active }, () => {
       //console.log('Value is set to ', key, ':', value);
 
-      chrome.storage.local.get(key, (outcome) => {
-        console.log('Retrieved name: ', key, ':', outcome.active);
-      });
-
-
       readChromeLocalStorage(); // TEST: See all keys in local storage
     });
-    readChromeLocalStorage(); // TEST: See all keys in local storage.
-
-
-    // Retrieve data from local storage aynchronously
-    /*async function getLocalData() {
-      let pro = new Promise(function (resolve, reject) {
-        chrome.storage.local.get(key, (result) => {
-          resolve(result);
-        });
-      })
-  
-      const r = await pro;
-      console.log('Value currently is ', key, ":", r);
-    }
-    getLocalData();*/
-
   }
-  checkStorage();
+  activeToggle();
+
+  /*async function getLocalData() {
+    let pro = new Promise(function (resolve, reject) {
+      chrome.storage.local.get(key, (result) => {
+        resolve(result);
+      });
+    })
+ 
+    const r = await pro;
+    console.log('Value currently is ', key, ":", r);
+  }
+  getLocalData();*/
 
 
   var main = function (active = false) {
