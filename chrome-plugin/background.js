@@ -1,6 +1,6 @@
 // The local storage functions are used for initialization.
 chrome.storage.local.set({ 'active': false }, () => { });
-chrome.storage.local.set({ 'init': true }, () => { });
+chrome.storage.local.set({ 'init': true }, () => { }); //TESTING
 
 // The body of this function will be executed as a content script inside the current page
 function runPlugin() {
