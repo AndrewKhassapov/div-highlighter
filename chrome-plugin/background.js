@@ -8,6 +8,12 @@ function runPlugin() {
 
   console.log("Plugin running"); // FOR DEBUGGING
 
+  let readChromeLocalStorage = function () {
+    chrome.storage.local.get(null, (items) => {
+      var allKeys = Object.keys(items);
+      console.log('All keys in chrome.storage.local: ', allKeys);
+    });
+  }
 
   let checkStorage = function () {
 
@@ -23,16 +29,9 @@ function runPlugin() {
       });
 
 
-      chrome.storage.local.get(null, (items) => {
-        var allKeys = Object.keys(items);
-        console.log('All keys: ', allKeys);
-      });
-
+      readChromeLocalStorage(); // TEST: See all keys in local storage
     });
-    chrome.storage.local.get(null, (items) => {
-      var allKeys = Object.keys(items);
-      console.log('All keys: ', allKeys);
-    });
+    readChromeLocalStorage(); // TEST: See all keys in local storage.
 
 
     // Retrieve data from local storage aynchronously
