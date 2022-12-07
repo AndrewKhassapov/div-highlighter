@@ -15,22 +15,38 @@ function runPlugin() {
     const value = active;
 
     // Set local storage asynchronously
-    chrome.storage.local.set({ key: value }, () => {
-      console.log('Value is set to ', key, ':', value);
+    chrome.storage.local.set({ 'active': active }, () => {
+      //console.log('Value is set to ', key, ':', value);
+
+      chrome.storage.local.get(key, (outcome) => {
+        console.log('Retrieved name: ', key, ':', outcome.active);
+      });
+
+
+      chrome.storage.local.get(null, (items) => {
+        var allKeys = Object.keys(items);
+        console.log('All keys: ', allKeys);
+      });
+
+    });
+    chrome.storage.local.get(null, (items) => {
+      var allKeys = Object.keys(items);
+      console.log('All keys: ', allKeys);
     });
 
+
     // Retrieve data from local storage aynchronously
-    async function getLocalData() {
+    /*async function getLocalData() {
       let pro = new Promise(function (resolve, reject) {
         chrome.storage.local.get(key, (result) => {
           resolve(result);
         });
       })
-
+  
       const r = await pro;
       console.log('Value currently is ', key, ":", r);
     }
-    getLocalData();
+    getLocalData();*/
 
   }
   checkStorage();
