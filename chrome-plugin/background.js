@@ -4,6 +4,19 @@ function runPlugin() {
   var active = false; // TODO: Store and get from local storage.
   console.log("Plugin running", active); // FOR DEBUGGING
 
+  // Set local storage
+  const key = 'active';
+  const value = false;
+  chrome.storage.local.set({ key: value }, () => {
+    console.log('Value is set to ' + value);
+  });
+
+  // Retrieve data from local storage
+  chrome.storage.local.get([key], (result) => {
+    console.log('Value currently is ' + result.key);
+  });
+
+
   var main = function () {
 
     const getRandomColor = function (alpha = '') {
@@ -52,5 +65,6 @@ chrome.action.onClicked.addListener((tab) => {
   chrome.scripting.executeScript({
     target: { tabId: tab.id },
     function: runPlugin
-  });
+  },
+    (results) => { });
 });
