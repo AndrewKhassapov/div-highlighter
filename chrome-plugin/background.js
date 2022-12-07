@@ -36,7 +36,7 @@ function runPlugin() {
   checkStorage();
 
 
-  var main = function () {
+  var main = function (active = false) {
 
     const getRandomColor = function (alpha = '') {
       const randomColor = Math.floor(Math.random() * 16777215).toString(16);
@@ -58,7 +58,7 @@ function runPlugin() {
         divs[i].style.border = 'solid ' + randomColor + 'ff';
       }
     }
-    if (!active) {
+    if (!this.active) {
       changeDivColor();
     }
 
@@ -68,12 +68,12 @@ function runPlugin() {
         divs[i].style.border = divsInitial[i].style.border ? divsInitial[i].style.border : '';
       }
     }
-    if (active) {
+    if (this.active) {
       console.log("Restoring divs");
       restoreDivColor();
     }
 
-    active = !active;
+    this.active = !active;
   }
   main();
 
