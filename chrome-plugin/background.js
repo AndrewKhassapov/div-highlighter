@@ -1,20 +1,39 @@
 // The body of this function will be executed as a content script inside the current page
 function runPlugin() {
 
-  var active = false; // TODO: Store and get from local storage.
-  console.log("Plugin running", active); // FOR DEBUGGING
+  /**
+   * True when plugin is active. False otherwise.
+   */
+  let active = false;
 
-  // Set local storage
-  const key = 'active';
-  const value = false;
-  chrome.storage.local.set({ key: value }, () => {
-    console.log('Value is set to ' + value);
-  });
+  console.log("Plugin running"); // FOR DEBUGGING
 
-  // Retrieve data from local storage
-  chrome.storage.local.get([key], (result) => {
-    console.log('Value currently is ' + result.key);
-  });
+
+  let checkStorage = function () {
+
+    const key = 'active';
+    const value = active;
+
+    // Set local storage asynchronously
+    chrome.storage.local.set({ key: value }, () => {
+      console.log('Value is set to ', key, ':', value);
+    });
+
+    // Retrieve data from local storage aynchronously
+    async function getLocalData() {
+      let pro = new Promise(function (resolve, reject) {
+        chrome.storage.local.get(key, (result) => {
+          resolve(result);
+        });
+      })
+
+      const r = await pro;
+      console.log('Value currently is ', key, ":", r);
+    }
+    getLocalData();
+
+  }
+  checkStorage();
 
 
   var main = function () {
