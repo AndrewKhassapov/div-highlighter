@@ -90,7 +90,7 @@ function runPlugin() {
     });
   }
   activeToggle();
-  console.log(active);
+  console.log(active); // TODO: Does not change. Need to encapsulate in a function.
 
   /*async function getLocalData() {
     let pro = new Promise(function (resolve, reject) {
