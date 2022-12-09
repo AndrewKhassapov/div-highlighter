@@ -17,6 +17,13 @@ function runPlugin() {
     chrome.storage.local.get(null, (items) => {
       var allKeys = Object.keys(items);
       console.log('All keys in chrome.storage.local: ', allKeys);
+
+      allKeys.forEach(key => {
+        chrome.storage.local.get(key, (result) => {
+          console.log(' Value of ', key, ":", result);
+        });
+      });
+
     });
   }
 
@@ -38,9 +45,19 @@ function runPlugin() {
 
   // Set local storage asynchronously
   const activeToggle = function () {
-    active = !active;
-    chrome.storage.local.set({ 'active': active }, () => {
-      //console.log('Value is set to ', key, ':', value);
+
+    chrome.storage.local.get('active', (result) => {
+      active = !result.active;
+      console.log(active);
+
+      if (active === true) {
+        console.log("IT IS FALSE. SET TRUE");
+        chrome.storage.local.set({ 'active': true }, () => { console.log(result.active); });
+      } else {
+        console.log("IT IS TRUE. SET FALSE");
+        chrome.storage.local.set({ 'active': false }, () => { console.log(result.active); });
+      }
+
 
       readChromeLocalStorage(); // TEST: See all keys in local storage
     });
