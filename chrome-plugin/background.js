@@ -12,7 +12,9 @@ function runPlugin() {
 
   console.log("Plugin running"); // FOR DEBUGGING
 
-  // TODO: Move initialization to a separate function
+  /**
+   * Read all keys in chrome.storage.local and log them to the console.
+   */
   let readChromeLocalStorage = function () {
     chrome.storage.local.get(null, (items) => {
       var allKeys = Object.keys(items);
@@ -48,16 +50,12 @@ function runPlugin() {
 
     chrome.storage.local.get('active', (result) => {
       active = !result.active;
-      console.log(active);
 
       if (active === true) {
-        console.log("IT IS FALSE. SET TRUE");
-        chrome.storage.local.set({ 'active': true }, () => { console.log(result.active); });
+        chrome.storage.local.set({ 'active': true }, () => { });
       } else {
-        console.log("IT IS TRUE. SET FALSE");
-        chrome.storage.local.set({ 'active': false }, () => { console.log(result.active); });
+        chrome.storage.local.set({ 'active': false }, () => { });
       }
-
 
       readChromeLocalStorage(); // TEST: See all keys in local storage
     });
@@ -84,6 +82,7 @@ function runPlugin() {
       return "#" + randomColor + alpha;
     }
 
+    // TODO: Move initialization to a separate function
     const divs = document.getElementsByTagName('div');
     const divsInitial = [];
     if (divsInitial.length <= 0) {
