@@ -1,6 +1,6 @@
 // The local storage functions are used for initialization.
 chrome.storage.local.set({ 'active': false }, () => { });
-chrome.storage.local.set({ 'init': true }, () => { }); //TESTING
+chrome.storage.local.set({ 'init': false }, () => { });
 
 // The body of this function will be executed as a content script inside the current page
 function runPlugin() {
@@ -29,6 +29,34 @@ function runPlugin() {
     });
   }
 
+  // Initialize web elements
+  var divs = divs = document.getElementsByTagName('div');
+  var divsInitial = typeof (divsInitial) == 'undefined' ? [] : divsInitial;
+  const initialize = function () {
+
+    chrome.storage.local.get('init', (result) => {
+      if (result.init === false) {
+
+        // TODO: Move initialization to a separate function
+        console.log('Initializing plugin');
+        divsInitial = [];
+        if (divsInitial.length <= 0) {
+          for (let i = 0; i < divs.length; i++) {
+            divsInitial[i] = divs[i];
+          }
+        }
+
+        chrome.storage.local.set({ 'init': true }, () => { });
+
+        readChromeLocalStorage(); // TEST: See all keys in local storage
+      }
+
+    });
+  }
+  initialize();
+  console.log(divs);
+  console.log(divsInitial);
+
   /*let checkStorage = function () {
     const key = 'active';
     const value = active;
@@ -50,6 +78,7 @@ function runPlugin() {
 
     chrome.storage.local.get('active', (result) => {
       active = !result.active;
+      console.log(active);
 
       if (active === true) {
         chrome.storage.local.set({ 'active': true }, () => { });
@@ -61,6 +90,7 @@ function runPlugin() {
     });
   }
   activeToggle();
+  console.log(active);
 
   /*async function getLocalData() {
     let pro = new Promise(function (resolve, reject) {
@@ -75,47 +105,33 @@ function runPlugin() {
   getLocalData();*/
 
 
-  var main = function (active = false) {
-
-    const getRandomColor = function (alpha = '') {
-      const randomColor = Math.floor(Math.random() * 16777215).toString(16);
-      return "#" + randomColor + alpha;
-    }
-
-    // TODO: Move initialization to a separate function
-    const divs = document.getElementsByTagName('div');
-    const divsInitial = [];
-    if (divsInitial.length <= 0) {
-      for (let i = 0; i < divs.length; i++) {
-        divsInitial[i] = divs[i];
-      }
-    }
-
-    const changeDivColor = function () {
-      for (let i = 0; i < divs.length; i++) {
-        const randomColor = getRandomColor();
-        divs[i].style.backgroundColor = randomColor + '88';
-        divs[i].style.border = 'solid ' + randomColor + 'ff';
-      }
-    }
-    if (!this.active) {
-      changeDivColor();
-    }
-
-    const restoreDivColor = function () {
-      for (let i = 0; i < divs.length; i++) {
-        divs[i].style.backgroundColor = divsInitial[i].style.backgroundColor ? divsInitial[i].style.backgroundColor : '';
-        divs[i].style.border = divsInitial[i].style.border ? divsInitial[i].style.border : '';
-      }
-    }
-    if (this.active) {
-      console.log("Restoring divs");
-      restoreDivColor();
-    }
-
-    this.active = !active;
+  const getRandomColor = function (alpha = '') {
+    const randomColor = Math.floor(Math.random() * 16777215).toString(16);
+    return "#" + randomColor + alpha;
   }
-  main();
+
+  const changeDivColor = function () {
+    for (let i = 0; i < divs.length; i++) {
+      const randomColor = getRandomColor();
+      divs[i].style.backgroundColor = randomColor + '88';
+      divs[i].style.border = 'solid ' + randomColor + 'ff';
+    }
+  }
+  if (!this.active) {
+    changeDivColor();
+  }
+
+  const restoreDivColor = function () {
+    for (let i = 0; i < divs.length; i++) {
+      divs[i].style.backgroundColor = divsInitial[i].style.backgroundColor ? divsInitial[i].style.backgroundColor : '';
+      divs[i].style.border = divsInitial[i].style.border ? divsInitial[i].style.border : '';
+    }
+  }
+  if (this.active) {
+    console.log("Restoring divs");
+    restoreDivColor();
+  }
+
 
   return;
 }
