@@ -20,7 +20,7 @@ function runPlugin() {
     });
   }
 
-  let checkStorage = function () {
+  /*let checkStorage = function () {
     const key = 'active';
     const value = active;
     // Retrieve data from local storage aynchronously
@@ -33,7 +33,7 @@ function runPlugin() {
       console.log('Retrieved name: ', key, ':', outcome.active, ' set as: ', active);
     });
   }
-  checkStorage();
+  checkStorage();*/
 
 
   // Set local storage asynchronously
