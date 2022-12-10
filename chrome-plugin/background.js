@@ -40,10 +40,11 @@ function runPlugin() {
   }
 
   // Initialize web elements
-  var divs = typeof (divs) == 'undefined' ? [] : document.getElementsByTagName('div');
-  var divsInitial = typeof (divsInitial) == 'undefined' ? [] : divsInitial;
-  const initialize = function () {
+  var divs = typeof (divs) == 'undefined' ? document.getElementsByTagName('div') : divs;
 
+  /*
+  const initialize = function () {
+    // Initialize elements
     chrome.storage.local.get('init', (result) => {
       if (result.init === false) {
 
@@ -60,11 +61,12 @@ function runPlugin() {
         readChromeLocalStorage(); // TEST: See all keys in local storage
       }
 
-      // TODO: Move main functionality here.
-
     });
   }
   initialize();
+  var divsInitial = typeof (divsInitial) == 'undefined' ? [] : divsInitial;
+  */
+
 
   // Start main
   /*let checkStorage = function () {
@@ -82,6 +84,20 @@ chrome.storage.local.get(key, (outcome) => {
 }
 checkStorage();*/
 
+  const changeDivColor = function () {
+    for (let i = 0; i < divs.length; i++) {
+      const randomColor = getRandomColor();
+      divs[i].style.backgroundColor = randomColor + '88';
+      divs[i].style.border = 'solid ' + randomColor + 'ff';
+    }
+  }
+
+  const restoreDivColor = function () {
+    for (let i = 0; i < divs.length; i++) {
+      divs[i].style.backgroundColor = '';//divsInitial[i].style.backgroundColor ? divsInitial[i].style.backgroundColor : '';
+      divs[i].style.border = '';//divsInitial[i].style.border ? divsInitial[i].style.border : '';
+    }
+  }
 
   // Set local storage asynchronously
   const activeToggle = function () {
@@ -95,14 +111,19 @@ checkStorage();*/
       } else {
         chrome.storage.local.set({ 'active': false }, () => { });
       }
+      console.log('active async: ', active);
+
+      if (!active) {
+        changeDivColor();
+      } else {
+        console.log("Restoring divs");
+        restoreDivColor();
+      }
 
       readChromeLocalStorage(); // TEST: See all keys in local storage
     });
   }
   activeToggle();
-  console.log('active: ', active);
-  console.log('divs: ', divs);
-  console.log('div-i: ', divsInitial);
 
   /*async function getLocalData() {
     let pro = new Promise(function (resolve, reject) {
@@ -116,28 +137,6 @@ checkStorage();*/
   }
   getLocalData();*/
 
-
-  const changeDivColor = function () {
-    for (let i = 0; i < divs.length; i++) {
-      const randomColor = getRandomColor();
-      divs[i].style.backgroundColor = randomColor + '88';
-      divs[i].style.border = 'solid ' + randomColor + 'ff';
-    }
-  }
-  if (!active) {
-    changeDivColor();
-  }
-
-  const restoreDivColor = function () {
-    for (let i = 0; i < divs.length; i++) {
-      divs[i].style.backgroundColor = divsInitial[i].style.backgroundColor ? divsInitial[i].style.backgroundColor : '';
-      divs[i].style.border = divsInitial[i].style.border ? divsInitial[i].style.border : '';
-    }
-  }
-  if (active) {
-    console.log("Restoring divs");
-    restoreDivColor();
-  }
   // End main
 
   return;
