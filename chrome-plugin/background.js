@@ -13,6 +13,16 @@ function runPlugin() {
   console.log("Plugin running"); // FOR DEBUGGING
 
   /**
+   * Returns a random color in hex format.
+   * @param {String} alpha Alpha value in hex format. 00 for 0. FF for 1. 
+   * @returns A string in hex format. #RRGGBB or #RRGGBBAA if alpha is provided.
+   */
+  const getRandomColor = function (alpha = '') {
+    const randomColor = Math.floor(Math.random() * 16777215).toString(16);
+    return "#" + randomColor + alpha;
+  }
+
+  /**
    * Read all keys in chrome.storage.local and log them to the console.
    */
   let readChromeLocalStorage = function () {
@@ -30,14 +40,13 @@ function runPlugin() {
   }
 
   // Initialize web elements
-  var divs = divs = document.getElementsByTagName('div');
+  var divs = typeof (divs) == 'undefined' ? [] : document.getElementsByTagName('div');
   var divsInitial = typeof (divsInitial) == 'undefined' ? [] : divsInitial;
   const initialize = function () {
 
     chrome.storage.local.get('init', (result) => {
       if (result.init === false) {
 
-        // TODO: Move initialization to a separate function
         console.log('Initializing plugin');
         divsInitial = [];
         if (divsInitial.length <= 0) {
@@ -51,26 +60,27 @@ function runPlugin() {
         readChromeLocalStorage(); // TEST: See all keys in local storage
       }
 
+      // TODO: Move main functionality here.
+
     });
   }
   initialize();
-  console.log(divs);
-  console.log(divsInitial);
 
+  // Start main
   /*let checkStorage = function () {
-    const key = 'active';
-    const value = active;
-    // Retrieve data from local storage aynchronously
-    chrome.storage.local.get(key, (outcome) => {
-      if (outcome.active === 'undefined') {
-        active = false; // Initialize
-        chrome.storage.local.set({ 'active': active });
-      };
-      active = outcome.active;
-      console.log('Retrieved name: ', key, ':', outcome.active, ' set as: ', active);
-    });
-  }
-  checkStorage();*/
+const key = 'active';
+const value = active;
+// Retrieve data from local storage aynchronously
+chrome.storage.local.get(key, (outcome) => {
+ if (outcome.active === 'undefined') {
+   active = false; // Initialize
+   chrome.storage.local.set({ 'active': active });
+ };
+ active = outcome.active;
+ console.log('Retrieved name: ', key, ':', outcome.active, ' set as: ', active);
+});
+}
+checkStorage();*/
 
 
   // Set local storage asynchronously
@@ -90,7 +100,9 @@ function runPlugin() {
     });
   }
   activeToggle();
-  console.log(active); // TODO: Does not change. Need to encapsulate in a function.
+  console.log('active: ', active);
+  console.log('divs: ', divs);
+  console.log('div-i: ', divsInitial);
 
   /*async function getLocalData() {
     let pro = new Promise(function (resolve, reject) {
@@ -105,11 +117,6 @@ function runPlugin() {
   getLocalData();*/
 
 
-  const getRandomColor = function (alpha = '') {
-    const randomColor = Math.floor(Math.random() * 16777215).toString(16);
-    return "#" + randomColor + alpha;
-  }
-
   const changeDivColor = function () {
     for (let i = 0; i < divs.length; i++) {
       const randomColor = getRandomColor();
@@ -117,7 +124,7 @@ function runPlugin() {
       divs[i].style.border = 'solid ' + randomColor + 'ff';
     }
   }
-  if (!this.active) {
+  if (!active) {
     changeDivColor();
   }
 
@@ -127,11 +134,11 @@ function runPlugin() {
       divs[i].style.border = divsInitial[i].style.border ? divsInitial[i].style.border : '';
     }
   }
-  if (this.active) {
+  if (active) {
     console.log("Restoring divs");
     restoreDivColor();
   }
-
+  // End main
 
   return;
 }
