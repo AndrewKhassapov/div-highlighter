@@ -138,9 +138,12 @@ checkStorage();*/
 }
 
 /**
- * Runs the plugin.
+ * Runs the extension.
  */
 chrome.action.onClicked.addListener((tab) => {
+
+  // TODO: Add check for active flag in local storage here. Use it to run functions with parameters.
+
   chrome.scripting.executeScript({
     target: { tabId: tab.id },
     function: runPlugin
