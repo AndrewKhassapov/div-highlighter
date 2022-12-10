@@ -1,8 +1,8 @@
 {
-  "name": "Website Div Highlighter",
+  "name": "Highlight Website Divs",
   "short_name": "Div Outline",
-  "description": "A Chrome extension that highlights all <div/> elements at the click of the icon.",
-  "version": "0.1.1",
+  "description": "Highlight all <div/> elements in a single click!",
+  "version": "0.1.6",
   "manifest_version": 3,
   "author": "Andrew Khassapov",
   "background": {
@@ -10,19 +10,19 @@
     "type": "module"
   },
   "action": {
-    "default icon": {
-      "16": "/images/icon16.png",
-      "32": "/images/icon32.png",
-      "48": "/images/icon48.png",
-      "128": "/images/icon128.png"
+    "default_icon": {
+      "16": "/images/ext/icon16.png",
+      "32": "/images/ext/icon32.png",
+      "48": "/images/ext/icon48.png",
+      "128": "/images/ext/icon128.png"
     },
   "default_title": "Highlight Divs"},
   "permissions": ["storage", "activeTab", "contextMenus", "scripting"],
   "icons": {
-    "16": "/images/icon16.png",
-    "32": "/images/icon32.png",
-    "48": "/images/icon48.png",
-    "128": "/images/icon128.png"
+    "16": "/images/main/icon16.png",
+    "32": "/images/main/icon32.png",
+    "48": "/images/main/icon48.png",
+    "128": "/images/main/icon128.png"
   },
   "content_scripts": [
     {

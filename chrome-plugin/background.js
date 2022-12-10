@@ -89,8 +89,36 @@ checkStorage();*/
 
       if (active === true) {
         chrome.storage.local.set({ 'active': true }, () => { });
+
+        try {
+          chrome.action.setIcon({
+            path: {
+              '16': '/images/on/icon16.png',
+              '32': '/images/on/icon32.png',
+              '48': '/images/on/icon48.png',
+              '128': '/images/on/icon128.png'
+            }
+          }); // Error handling response: TypeError: Cannot read properties of undefined (reading 'setIcon')
+        } catch (e) {
+          if (log) console.log('Error on set \'on\' icon:', e);
+        }
+
       } else {
         chrome.storage.local.set({ 'active': false }, () => { });
+
+        try {
+          chrome.action.setIcon({
+            path: {
+              "16": "/images/ext/icon16.png",
+              "32": "/images/ext/icon32.png",
+              "48": "/images/ext/icon48.png",
+              "128": "/images/ext/icon128.png"
+            }
+          }); // Error handling response: TypeError: Cannot read properties of undefined (reading 'setIcon')
+        } catch (e) {
+          if (log) console.log('Error on set initial icon:', e);
+        }
+
       }
 
       if (active === false) {
