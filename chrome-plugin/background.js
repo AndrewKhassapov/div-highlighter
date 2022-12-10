@@ -4,9 +4,9 @@ chrome.storage.local.set({ 'init': false }, () => { });
 
 /**
  * The body of this function will be executed as a content script inside the current page
- * @returns 
+ * @returns
  */
-function runPlugin(log = false) {
+function runPlugin(log = true) {
 
   /**
    * True when plugin is active. False otherwise.
@@ -91,6 +91,7 @@ checkStorage();*/
         chrome.storage.local.set({ 'active': true }, () => { });
 
         try {
+          chrome.action.setTitle({ title: 'Click to restore divs' }, () => { });
           chrome.action.setIcon({
             path: {
               '16': '/images/on/icon16.png',
@@ -107,6 +108,7 @@ checkStorage();*/
         chrome.storage.local.set({ 'active': false }, () => { });
 
         try {
+          chrome.action.setTitle({ title: 'Click to highlight divs' }, () => { });
           chrome.action.setIcon({
             path: {
               "16": "/images/ext/icon16.png",
