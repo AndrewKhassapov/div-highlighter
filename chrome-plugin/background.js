@@ -10,7 +10,7 @@ function runPlugin() {
    */
   let active = null;
 
-  console.log("Plugin running"); // FOR DEBUGGING
+  //console.log("Plugin running"); // FOR DEBUGGING
 
   /**
    * Returns a random color in hex format.
@@ -25,7 +25,7 @@ function runPlugin() {
   /**
    * Read all keys in chrome.storage.local and log them to the console.
    */
-  let readChromeLocalStorage = function () {
+  let logChromeLocalStorage = function () {
     chrome.storage.local.get(null, (items) => {
       var allKeys = Object.keys(items);
       console.log('All keys in chrome.storage.local: ', allKeys);
@@ -58,7 +58,7 @@ function runPlugin() {
 
         chrome.storage.local.set({ 'init': true }, () => { });
 
-        readChromeLocalStorage(); // TEST: See all keys in local storage
+        logChromeLocalStorage(); // TEST: See all keys in local storage
       }
 
     });
@@ -104,23 +104,20 @@ checkStorage();*/
 
     chrome.storage.local.get('active', (result) => {
       active = !result.active;
-      console.log(active);
 
       if (active === true) {
         chrome.storage.local.set({ 'active': true }, () => { });
       } else {
         chrome.storage.local.set({ 'active': false }, () => { });
       }
-      console.log('active async: ', active);
 
-      if (!active) {
-        changeDivColor();
-      } else {
-        console.log("Restoring divs");
+      if (active === false) {
         restoreDivColor();
+      } else {
+        changeDivColor();
       }
 
-      readChromeLocalStorage(); // TEST: See all keys in local storage
+      //logChromeLocalStorage(); // TEST: See all keys in local storage
     });
   }
   activeToggle();

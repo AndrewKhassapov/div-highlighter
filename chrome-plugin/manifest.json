@@ -2,7 +2,7 @@
   "name": "Website Div Highlighter",
   "short_name": "Div Outline",
   "description": "A Chrome extension that highlights all <div/> elements at the click of the icon.",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "manifest_version": 3,
   "author": "Andrew Khassapov",
   "background": {

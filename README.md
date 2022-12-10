@@ -6,6 +6,19 @@
 
 #### ❓ How to implement it?
 
+## For Google Chrome:
+
+1. Download the chrome-plugin.zip
+2. Open [chrome://extensions/](chrome://extensions/)
+3. Enable '_Developer Mode_'.
+4. Drag and drop chrome-plugin.zip to chrome://extensions/
+5. Open your website.
+   eg. [this example](https://example.com/)
+6. Click on the extension to highlight divs!
+7. Click on the extension again to restore div colours.
+
+## For other browsers:
+
 1. Open your website.
    eg. [this example](https://example.com/)
 2. Copy, paste and run the code in your browser javascript scratchpad.
