@@ -4,9 +4,9 @@
 
 ### This was created in an effort to simplify web development, by highlighting every div. :computer:
 
-#### ❓ How to implement it?
+## ❓ How to implement it?
 
-## For Google Chrome:
+### For Google Chrome:
 
 1. Download the chrome-plugin.zip
 2. Open [chrome://extensions/](chrome://extensions/)
@@ -17,11 +17,21 @@
 6. Click on the extension to highlight divs!
 7. Click on the extension again to restore div colours.
 
-## For other browsers:
+### For other browsers:
 
 1. Open your website.
    eg. [this example](https://example.com/)
 2. Copy, paste and run the code in your browser javascript scratchpad.
+
+```
+main(); // To run the plugin
+```
+
+or
+
+```
+main(false); // To restore elements
+```
 
 #### :arrow_up_small: Features in development.
 
@@ -29,8 +39,7 @@
 - [x] Function to revert div colors. :heavy_check_mark:
 - [x] Google Chrome browser [extension as .zip](https://bashvlas.com/blog/install-chrome-extension-in-developer-mode/). :heavy_check_mark:
 - [ ] Add feature: Restore div elements to their original colours instead of clearing.
-- [ ] Add feature: Refactor extension to separate .js imports
-- [ ] Add user interface.
+- [ ] Add user interface indicating when extension is active or inactive.
 - [ ] Public listing of Google Chrome browser extension.
 - [ ] Custom features to Google Chrome browser extension.
 
