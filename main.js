@@ -1,4 +1,4 @@
-var main = function () {
+var main = function (highlight = true) {
 
     const getRandomColor = function (alpha = '') {
         const randomColor = Math.floor(Math.random() * 16777215).toString(16);
@@ -20,7 +20,7 @@ var main = function () {
             divs[i].style.border = 'solid ' + randomColor + 'ff';
         }
     }
-    changeDivColor();
+    if (highlight) { changeDivColor(); }
 
     const restoreDivColor = function () {
         for (let i = 0; i < divs.length; i++) {
@@ -28,7 +28,7 @@ var main = function () {
             divs[i].style.border = divsInitial[i].style.border ? divsInitial[i].style.border : '';
         }
     }
-    //restoreDivColor();
+    if (!highlight) { restoreDivColor(); }
 
 }
 main();

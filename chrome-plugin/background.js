@@ -2,7 +2,10 @@
 chrome.storage.local.set({ 'active': false }, () => { });
 chrome.storage.local.set({ 'init': false }, () => { });
 
-// The body of this function will be executed as a content script inside the current page
+/**
+ * The body of this function will be executed as a content script inside the current page
+ * @returns 
+ */
 function runPlugin() {
 
   /**
@@ -11,33 +14,6 @@ function runPlugin() {
   let active = null;
 
   //console.log("Plugin running"); // FOR DEBUGGING
-
-  /**
-   * Returns a random color in hex format.
-   * @param {String} alpha Alpha value in hex format. 00 for 0. FF for 1. 
-   * @returns A string in hex format. #RRGGBB or #RRGGBBAA if alpha is provided.
-   */
-  const getRandomColor = function (alpha = '') {
-    const randomColor = Math.floor(Math.random() * 16777215).toString(16);
-    return "#" + randomColor + alpha;
-  }
-
-  /**
-   * Read all keys in chrome.storage.local and log them to the console.
-   */
-  let logChromeLocalStorage = function () {
-    chrome.storage.local.get(null, (items) => {
-      var allKeys = Object.keys(items);
-      console.log('All keys in chrome.storage.local: ', allKeys);
-
-      allKeys.forEach(key => {
-        chrome.storage.local.get(key, (result) => {
-          console.log(' Value of ', key, ":", result);
-        });
-      });
-
-    });
-  }
 
   // Initialize web elements
   var divs = typeof (divs) == 'undefined' ? document.getElementsByTagName('div') : divs;
@@ -84,7 +60,10 @@ chrome.storage.local.get(key, (outcome) => {
 }
 checkStorage();*/
 
-  const changeDivColor = function () {
+  /**
+   * Colors all <div/> elements on the page.
+   */
+  const colorDivs = function () {
     for (let i = 0; i < divs.length; i++) {
       const randomColor = getRandomColor();
       divs[i].style.backgroundColor = randomColor + '88';
@@ -92,7 +71,10 @@ checkStorage();*/
     }
   }
 
-  const restoreDivColor = function () {
+  /**
+ * Clears the inline style background color and border of all <div/> elements on the page.
+ */
+  const clearDivs = function () {
     for (let i = 0; i < divs.length; i++) {
       divs[i].style.backgroundColor = '';//divsInitial[i].style.backgroundColor ? divsInitial[i].style.backgroundColor : '';
       divs[i].style.border = '';//divsInitial[i].style.border ? divsInitial[i].style.border : '';
@@ -112,12 +94,12 @@ checkStorage();*/
       }
 
       if (active === false) {
-        restoreDivColor();
+        clearDivs();
       } else {
-        changeDivColor();
+        colorDivs();
       }
 
-      //logChromeLocalStorage(); // TEST: See all keys in local storage
+      //logExtensionLocalStorage(); // LOG: See all keys in local storage
     });
   }
   activeToggle();
@@ -139,6 +121,9 @@ checkStorage();*/
   return;
 }
 
+/**
+ * Runs the plugin.
+ */
 chrome.action.onClicked.addListener((tab) => {
   chrome.scripting.executeScript({
     target: { tabId: tab.id },
