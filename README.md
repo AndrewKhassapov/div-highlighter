@@ -14,7 +14,10 @@
 
 - [x] Prototype code to add color to every div. :heavy_check_mark:
 - [x] Function to revert div colors. :heavy_check_mark:
-- [ ] Google Chrome browser [extension as .zip](https://bashvlas.com/blog/install-chrome-extension-in-developer-mode/).
+- [x] Google Chrome browser [extension as .zip](https://bashvlas.com/blog/install-chrome-extension-in-developer-mode/). :heavy_check_mark:
+- [ ] Add feature: Restore div elements to their original colours instead of clearing.
+- [ ] Add feature: Refactor extension to separate .js imports
+- [ ] Add user interface.
 - [ ] Public listing of Google Chrome browser extension.
 - [ ] Custom features to Google Chrome browser extension.
 
