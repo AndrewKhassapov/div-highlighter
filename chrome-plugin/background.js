@@ -6,14 +6,14 @@ chrome.storage.local.set({ 'init': false }, () => { });
  * The body of this function will be executed as a content script inside the current page
  * @returns 
  */
-function runPlugin() {
+function runPlugin(log = false) {
 
   /**
    * True when plugin is active. False otherwise.
    */
   let active = null;
 
-  //console.log("Plugin running"); // FOR DEBUGGING
+  if (log) console.log("Plugin running"); // FOR DEBUGGING
 
   // Initialize web elements
   var divs = typeof (divs) == 'undefined' ? document.getElementsByTagName('div') : divs;
@@ -99,24 +99,10 @@ checkStorage();*/
         colorDivs();
       }
 
-      //logExtensionLocalStorage(); // LOG: See all keys in local storage
+      if (log) logExtensionLocalStorage(); // LOG: See all keys in local storage
     });
   }
   activeToggle();
-
-  /*async function getLocalData() {
-    let pro = new Promise(function (resolve, reject) {
-      chrome.storage.local.get(key, (result) => {
-        resolve(result);
-      });
-    })
- 
-    const r = await pro;
-    console.log('Value currently is ', key, ":", r);
-  }
-  getLocalData();*/
-
-  // End main
 
   return;
 }
