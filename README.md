@@ -15,7 +15,9 @@
 5. Open your website.
    eg. [this example](https://example.com/)
 6. Click on the extension to highlight divs!
+   ![Highlight elements](readme/step-1.png)
 7. Click on the extension again to restore div colours.
+   ![Restore elements](readme/step-2.png)
 
 ### For other browsers:
 
@@ -38,8 +40,9 @@ main(false); // To restore elements
 - [x] Prototype code to add color to every div. :heavy_check_mark:
 - [x] Function to revert div colors. :heavy_check_mark:
 - [x] Google Chrome browser [extension as .zip](https://bashvlas.com/blog/install-chrome-extension-in-developer-mode/). :heavy_check_mark:
+- [x] Add user interface indicating when extension is active or inactive. :heavy_check_mark:
 - [ ] Add feature: Restore div elements to their original colours instead of clearing.
-- [ ] Add user interface indicating when extension is active or inactive.
+- [ ] Add feature: Keyboard shortcuts to toggle extension for Windows and MacOS.
 - [ ] Public listing of Google Chrome browser extension.
 - [ ] Custom features to Google Chrome browser extension.
 
@@ -73,4 +76,4 @@ A clearer example of how to implement this in **Google Chrome**:
 
 #### Every div on the website will change to a transparent color with a clear border. :rainbow:
 
-#### In development as of 10th December, 2022.
+#### In development as of 14th December, 2022.

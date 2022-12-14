@@ -1,10 +1,10 @@
 // The local storage functions are used for initialization.
-chrome.storage.local.set({ 'active': false }, () => { });
-chrome.storage.local.set({ 'init': false }, () => { });
+chrome.storage.local.set({ 'active': false });
+chrome.storage.local.set({ 'init': false });
 
 /**
  * The body of this function will be executed as a content script inside the current page
- * @returns
+ * @returns {boolean} The current state of the extension.
  */
 function runPlugin(isActive, log = false) {
 
@@ -73,7 +73,7 @@ function runPlugin(isActive, log = false) {
   }
   activeToggle();
 
-  return;
+  return isActive;
 }
 
 /**
