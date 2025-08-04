@@ -4,19 +4,19 @@ chrome.storage.local.set({ 'init': false }, () => { });
 
 /**
  * The body of this function will be executed as a content script inside the current page
- * @param {*} isActive If false, highlights will be added. If true, highlights will be removed.
+ * @param {boolean} [isActive=false] If false, highlights will be added. If true, highlights will be removed.
  * @param {boolean} [log=false] Logging for debugging. True to log. False for production.
  * @returns {boolean} The current state of the extension.
  */
 function runPlugin(isActive = false, log = false) {
-
-  if (log) console.log("Extension running. Is active: ", isActive); // FOR DEBUGGING
-
   // Initialize web elements
-  var divs = typeof (divs) == 'undefined' ? document.getElementsByTagName('div') : divs;
+  const PROPERTY_CHECK = 'div_highlighter_active';
+  const ELEMENT_CHECK = document.body;
+  divs = typeof (divs) == 'undefined' ? document.querySelectorAll('div,header,nav,main,section,article,aside,footer') : divs;
+  if (log) console.log('Extension running. Is active: %s. %s', isActive, divs); // FOR DEBUGGING
   /**
    * Initialize an array of web elements by tag.
-   * @param {*} varName Variable to initialize, if undefined.
+   * @param {[] | HTMLCollection} varName Variable to initialize, if undefined.
    * @param {Array[string]} tagName Element tag to search for. Excluding brackets. e.g. 'div'.
    * @returns Array of elements if not initialized. Original variable if already declared.
    */
@@ -25,14 +25,60 @@ function runPlugin(isActive = false, log = false) {
     return varName;
   }
 
-  let elem_headers = initializeElementsByTagName(elem_headers, 'header');
-  let elem_navs = initializeElementsByTagName(elem_navs, 'nav');
-  let elem_mains = initializeElementsByTagName(elem_mains, 'main');
-  let elem_sections = initializeElementsByTagName(elem_sections, 'section');
-  let elem_articles = initializeElementsByTagName(elem_articles, 'article');
-  let elem_asides = initializeElementsByTagName(elem_asides, 'aside');
-  let elem_footers = initializeElementsByTagName(elem_footers, 'footer');
-  divs = divs.concat(elem_headers, elem_navs, elem_mains, elem_sections, elem_articles, elem_asides, elem_footers);
+  // Check highlight status
+  const isHighlighted = function (tag = ELEMENT_CHECK) {
+    return (tag.getAttribute(PROPERTY_CHECK) == '1');
+  }
+  const setFlagHighlightedOn = function (tag = ELEMENT_CHECK) {
+    tag.setAttribute(PROPERTY_CHECK, '1');
+    isActive = true;
+    return (true);
+  }
+  const setFlagHighlightedOff = function (tag = ELEMENT_CHECK) {
+    tag.setAttribute(PROPERTY_CHECK, '0');
+    isActive = false;
+    return (false);
+  }
+  const toggleFlagHighlighted = function (tag = ELEMENT_CHECK) {
+    if (isHighlighted(tag)) {
+      setFlagHighlightedOff(tag);
+      return (false);
+    } else {
+      setFlagHighlightedOn(tag);
+      return (true);
+    }
+  }
+  /**
+   * True if initialized
+   * @param {Document.HTMLElement} tag Element to use for status. Defaults to document.body.
+   * @returns True when initialized. False on startup.
+   */
+  const isInitialized = function (tag = ELEMENT_CHECK) {
+    return (tag.hasAttribute(PROPERTY_CHECK))
+  }
+  const initialize = function (tag = ELEMENT_CHECK) {
+    if (!tag.hasAttribute(PROPERTY_CHECK)) {
+      /*let elem_headers = HTMLCollection();
+      let elem_navs = HTMLCollection();
+      let elem_mains = HTMLCollection();
+      let elem_sections = HTMLCollection();
+      let elem_articles = HTMLCollection();
+      let elem_asides = HTMLCollection();
+      let elem_footers = HTMLCollection();
+      elem_headers = initializeElementsByTagName(elem_headers, 'header');
+      elem_navs = initializeElementsByTagName(elem_navs, 'nav');
+      elem_mains = initializeElementsByTagName(elem_mains, 'main');
+      elem_sections = initializeElementsByTagName(elem_sections, 'section');
+      elem_articles = initializeElementsByTagName(elem_articles, 'article');
+      elem_asides = initializeElementsByTagName(elem_asides, 'aside');
+      elem_footers = initializeElementsByTagName(elem_footers, 'footer');
+      divs = divs.concat(elem_headers, elem_navs, elem_mains, elem_sections, elem_articles, elem_asides, elem_footers);*/
+      divs = typeof (divs) == 'undefined' ? document.querySelectorAll('div,header,nav,main,section,article,aside,footer') : divs;
+      setFlagHighlightedOff(tag);
+      return (true);
+    }
+    return (false);
+  }
 
 
   /*
@@ -59,38 +105,6 @@ function runPlugin(isActive = false, log = false) {
   initialize();
   var divsInitial = typeof (divsInitial) == 'undefined' ? [] : divsInitial;
   */
-  const PROPERTY_CHECK = 'div_highlighter_active';
-  const initialize = function (tag = document.body) {
-    if (!tag.hasAttribute(PROPERTY_CHECK)) {
-      setFlagHighlighted();
-      return (true)
-    }
-    return (false)
-  }
-
-  const isHighlighted = function (tag = document.body) {
-    return (tag.getAttribute(PROPERTY_CHECK) === '1')
-  }
-
-  const setFlagHighlightedOn = function (tag = document.body) {
-    tag.setAttribute(PROPERTY_CHECK, '1');
-    return (true)
-  }
-  const setFlagHighlightedOff = function (tag = document.body) {
-    tag.setAttribute(PROPERTY_CHECK, '0');
-    return (true)
-  }
-  const toggleFlagHighlighted = function (tag = document.body) {
-    if (isHighlighted(tag)) {
-      setFlagHighlightedOff(tag);
-    } else {
-      setFlagHighlightedOn(tag);
-    }
-  }
-
-
-
-
 
   /**
    * Colors all <div/> elements on the page.
@@ -99,10 +113,10 @@ function runPlugin(isActive = false, log = false) {
     for (let i = 0; i < divs.length; i++) {
       const randomColor = getRandomColor();
       divs[i].style.backgroundColor = randomColor + '88';
-      divs[i].style.border = 'solid ' + randomColor + 'ff';
+      divs[i].style.border = (divs[i].nodeName == "DIV") ? 'solid 1px ' + randomColor + 'ff' : 'dashed 2px ' + randomColor + 'ff';
+      if (log) console.log('Extension running. Element is: %s. Color: %s', divs[i].nodeName, randomColor); // FOR DEBUGGING
     }
   }
-
   /**
    * Clears the inline style background color and border of all <div/> elements on the page.
    */
@@ -114,21 +128,21 @@ function runPlugin(isActive = false, log = false) {
   }
 
   // Set local storage asynchronously
-  const activeToggle = function () {
+  const toggleHighlight = function () {
 
-    if (isActive === true) {
+    if (isHighlighted()) {
       clearDivs();
+      setFlagHighlightedOff();
     } else {
       colorDivs();
+      setFlagHighlightedOn();
     }
-
     if (log) logExtensionLocalStorage(); // LOG: See all keys in local storage
   }
-  activeToggle();
-
-  return isActive;
+  initialize();
+  toggleHighlight();
+  return (isActive);
 }
-
 /**
  * Runs the extension.
  */
@@ -177,8 +191,6 @@ chrome.action.onClicked.addListener((tab) => {
       } catch (e) {
         if (log) console.log('Error on set initial icon:', e);
       }
-
     }
-
   });
 });

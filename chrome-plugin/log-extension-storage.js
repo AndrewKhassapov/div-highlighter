@@ -12,6 +12,5 @@ let logExtensionLocalStorage = function () {
                 console.log(' Value of ', key, ":", result);
             });
         });
-
     });
 }

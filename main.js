@@ -12,21 +12,7 @@ var main = function (highlight = true) {
         const randomColor = Math.floor(Math.random() * 16777215).toString(16);
         return "#" + randomColor + alpha;
     }
-
-    const divs = document.getElementsByTagName('div');
-    function initializeElementsByTagName(varName, tagName = "") {
-        varName = (typeof (varName) == 'undefined' ? document.getElementsByTagName(tagName) : varName);
-        return varName;
-    }
-    let elem_headers = initializeElementsByTagName(elem_headers, 'header');
-    let elem_navs = initializeElementsByTagName(elem_navs, 'nav');
-    let elem_mains = initializeElementsByTagName(elem_mains, 'main');
-    let elem_sections = initializeElementsByTagName(elem_sections, 'section');
-    let elem_articles = initializeElementsByTagName(elem_articles, 'article');
-    let elem_asides = initializeElementsByTagName(elem_asides, 'aside');
-    let elem_footers = initializeElementsByTagName(elem_footers, 'footer');
-    divs = divs.concat(elem_headers, elem_navs, elem_mains, elem_sections, elem_articles, elem_asides, elem_footers);
-
+    const divs = document.querySelectorAll('div,header,nav,main,section,article,aside,footer');
     const divsInitial = [];
     if (divsInitial.length <= 0) {
         for (let i = 0; i < divs.length; i++) {
@@ -38,7 +24,7 @@ var main = function (highlight = true) {
         for (let i = 0; i < divs.length; i++) {
             const randomColor = getRandomColor();
             divs[i].style.backgroundColor = randomColor + '88';
-            divs[i].style.border = 'solid ' + randomColor + 'ff';
+            divs[i].style.border = (divs[i].nodeName == "DIV") ? 'solid 1px ' + randomColor + 'ff' : 'dashed 2px ' + randomColor + 'ff';
         }
     }
     if (highlight) { changeDivColor(); }
