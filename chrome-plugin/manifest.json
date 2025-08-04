@@ -2,7 +2,7 @@
   "name": "Highlight Website Divs",
   "short_name": "Div Outline",
   "description": "Highlight all <div/> elements in a single click!",
-  "version": "0.3.1",
+  "version": "0.4.0",
   "manifest_version": 3,
   "author": "Andrew Khassapov",
   "background": {

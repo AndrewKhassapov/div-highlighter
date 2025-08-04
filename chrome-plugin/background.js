@@ -4,14 +4,36 @@ chrome.storage.local.set({ 'init': false }, () => { });
 
 /**
  * The body of this function will be executed as a content script inside the current page
+ * @param {*} isActive If false, highlights will be added. If true, highlights will be removed.
+ * @param {boolean} [log=false] Logging for debugging. True to log. False for production.
  * @returns {boolean} The current state of the extension.
  */
-function runPlugin(isActive, log = false) {
+function runPlugin(isActive = false, log = false) {
 
   if (log) console.log("Extension running. Is active: ", isActive); // FOR DEBUGGING
 
   // Initialize web elements
   var divs = typeof (divs) == 'undefined' ? document.getElementsByTagName('div') : divs;
+  /**
+   * Initialize an array of web elements by tag.
+   * @param {*} varName Variable to initialize, if undefined.
+   * @param {Array[string]} tagName Element tag to search for. Excluding brackets. e.g. 'div'.
+   * @returns Array of elements if not initialized. Original variable if already declared.
+   */
+  function initializeElementsByTagName(varName, tagName = "") {
+    varName = (typeof (varName) == 'undefined' ? document.getElementsByTagName(tagName) : varName);
+    return varName;
+  }
+
+  let elem_headers = initializeElementsByTagName(elem_headers, 'header');
+  let elem_navs = initializeElementsByTagName(elem_navs, 'nav');
+  let elem_mains = initializeElementsByTagName(elem_mains, 'main');
+  let elem_sections = initializeElementsByTagName(elem_sections, 'section');
+  let elem_articles = initializeElementsByTagName(elem_articles, 'article');
+  let elem_asides = initializeElementsByTagName(elem_asides, 'aside');
+  let elem_footers = initializeElementsByTagName(elem_footers, 'footer');
+  divs = divs.concat(elem_headers, elem_navs, elem_mains, elem_sections, elem_articles, elem_asides, elem_footers);
+
 
   /*
   const initialize = function () {
@@ -37,6 +59,37 @@ function runPlugin(isActive, log = false) {
   initialize();
   var divsInitial = typeof (divsInitial) == 'undefined' ? [] : divsInitial;
   */
+  const PROPERTY_CHECK = 'div_highlighter_active';
+  const initialize = function (tag = document.body) {
+    if (!tag.hasAttribute(PROPERTY_CHECK)) {
+      setFlagHighlighted();
+      return (true)
+    }
+    return (false)
+  }
+
+  const isHighlighted = function (tag = document.body) {
+    return (tag.getAttribute(PROPERTY_CHECK) === '1')
+  }
+
+  const setFlagHighlightedOn = function (tag = document.body) {
+    tag.setAttribute(PROPERTY_CHECK, '1');
+    return (true)
+  }
+  const setFlagHighlightedOff = function (tag = document.body) {
+    tag.setAttribute(PROPERTY_CHECK, '0');
+    return (true)
+  }
+  const toggleFlagHighlighted = function (tag = document.body) {
+    if (isHighlighted(tag)) {
+      setFlagHighlightedOff(tag);
+    } else {
+      setFlagHighlightedOn(tag);
+    }
+  }
+
+
+
 
 
   /**
