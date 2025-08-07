@@ -2,7 +2,7 @@
   "name": "Highlight Website Divs",
   "short_name": "Div Outline",
   "description": "Highlight all <div/> elements in a single click!",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "manifest_version": 3,
   "author": "Andrew Khassapov",
   "background": {
@@ -16,8 +16,14 @@
       "48": "/images/ext/icon48.png",
       "128": "/images/ext/icon128.png"
     },
-  "default_title": "Click to highlight divs"},
-  "permissions": ["storage", "activeTab", "contextMenus", "scripting"],
+    "default_title": "Click to highlight divs"
+  },
+  "permissions": [
+    "storage",
+    "activeTab",
+    "contextMenus",
+    "scripting"
+  ],
   "icons": {
     "16": "/images/main/icon16.png",
     "32": "/images/main/icon32.png",
@@ -26,8 +32,10 @@
   },
   "content_scripts": [
     {
-        "matches": ["<all_urls>"],
-        "js": ["get-random-color.js", "log-extension-storage.js"]
+      "js": [
+        "get-random-color.js",
+        "log-extension-storage.js"
+      ]
     }
-]
+  ]
 }
